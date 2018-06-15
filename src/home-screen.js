@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
           <List>
             {
               this.props.notes.map( note =>
-                <ListItem key={note._id} onPress={() => this.onListItemClick(note._id)}>
+                <ListItem key={note.id} onPress={() => this.onListItemClick(note.id)}>
                   <View>
                     <Text>{note.title}</Text>
                     <Text>{note.text}</Text>

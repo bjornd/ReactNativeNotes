@@ -17,7 +17,7 @@ import ImagePicker from 'react-native-image-picker'
 export default class NoteModalScreen extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState){
     return {
-      values: nextProps.note && nextProps.note._id ? { ...nextProps.note } : {
+      values: nextProps.note && nextProps.note.id ? { ...nextProps.note } : {
         title: '',
         text: '',
       }
@@ -31,15 +31,15 @@ export default class NoteModalScreen extends React.Component {
   }
 
   onSaveButtonPress = async () => {
-    if (this.props.note && this.props.note._id) {
-      await CouchbaseLite.updateDocument(this.props.note._id, {
+    if (this.props.note && this.props.note.id) {
+      await CouchbaseLite.updateDocument(this.props.note.id, {
         title: this.state.values.title,
         text: this.state.values.text,
       })
       if (this.state.attachmentUri) {
-        await CouchbaseLite.addAttachment(this.state.attachmentUri, 'photo', this.props.note._id)
+        await CouchbaseLite.addAttachment(this.state.attachmentUri, 'photo', this.props.note.id)
       } else if (this.state.removeAttachment) {
-        await CouchbaseLite.removeAttachment('photo', this.props.note._id)
+        await CouchbaseLite.removeAttachment('photo', this.props.note.id)
       }
     } else {
       const docId = await CouchbaseLite.createDocument({
@@ -56,7 +56,7 @@ export default class NoteModalScreen extends React.Component {
   }
 
   onDeleteButtonPress = async () => {
-    await CouchbaseLite.deleteDocument( this.props.note._id )
+    await CouchbaseLite.deleteDocument( this.props.note.id )
     this.props.navigation.goBack()
   }
 
@@ -126,7 +126,7 @@ export default class NoteModalScreen extends React.Component {
                     source={{uri: this.state.attachmentUri}}
                   />
                 ) : (
-                  this.props.note && this.props.note._id && this.props.note._attachments && this.props.note._attachments.photo ? (
+                  this.props.note && this.props.note.id && this.props.note._attachments && this.props.note._attachments.photo ? (
                     <Image
                       style={{width: 100, height: 100}}
                       source={{uri: this.props.note._attachments.photo.url}}
@@ -143,7 +143,7 @@ export default class NoteModalScreen extends React.Component {
           </Form>
         </Content>
         {
-          this.props.note && this.props.note._id ? (
+          this.props.note && this.props.note.id ? (
             <Footer>
               <Button danger onPress={this.onDeleteButtonPress}><Text>Delete</Text></Button>
             </Footer>
