@@ -2,42 +2,34 @@
 //  CBLDatabaseChange.h
 //  CouchbaseLite
 //
-//  Created by Jens Alfke on 1/18/13.
-//  Copyright (c) 2013 Couchbase, Inc. All rights reserved.
+//  Copyright (c) 2017 Couchbase, Inc All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
-#import "CBLBase.h"
+#import <Foundation/Foundation.h>
+@class CBLDatabase;
 
-NS_ASSUME_NONNULL_BEGIN
+/** Database Change information  */
+@interface CBLDatabaseChange : NSObject
 
-/** Identifies a change to a database, that is, a newly added document revision.
-    The CBLDocumentChangeNotification contains one of these in the "change" key of its
-    userInfo dictionary, and CBLDatabaseChangeNotification contains an NSArray in "changes".  */
-@interface CBLDatabaseChange : NSObject <NSCopying>
+/** The database. */
+@property (readonly, nonatomic) CBLDatabase* database;
 
-/** The ID of the document that changed. */
-@property (readonly) NSString* documentID;
+/** The IDs of the document that changed. */
+@property (readonly, nonatomic) NSArray<NSString*>* documentIDs;
 
-/** The ID of the newly-added revision. A nil value means the document was purged. */
-@property (readonly, nullable) NSString* revisionID;
-
-/** Is the new revision the document's current (default, winning) one?
-    If not, there's a conflict. */
-@property (readonly) BOOL isCurrentRevision;
-
-/** YES if the document is in conflict. (The conflict might pre-date this change.) */
-@property (readonly) BOOL inConflict;
-
-/** YES of the document is deleted. */
-@property (readonly) BOOL isDeletion;
-
-/** The remote database URL that this change was pulled from, if any. */
-@property (readonly, nullable) NSURL* source;
-
+/** Not available */
 - (instancetype) init NS_UNAVAILABLE;
 
 @end
-
-
-NS_ASSUME_NONNULL_END
