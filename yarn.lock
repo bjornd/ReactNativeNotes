@@ -1698,9 +1698,9 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-couchbase-lite-query-parser@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/couchbase-lite-query-parser/-/couchbase-lite-query-parser-1.0.0.tgz#1965b48f802b3adf4e2184c1e51f2de902c92ef0"
+couchbase-lite-query-parser@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/couchbase-lite-query-parser/-/couchbase-lite-query-parser-1.0.2.tgz#3491528e35553cbb23f1ec0acf12b31b70ae5610"
   dependencies:
     jison "^0.4.18"
     mocha "^5.2.0"
@@ -4480,7 +4480,7 @@ react-lifecycles-compat@^1.0.2:
 react-native-cbl@../react-native-cbl:
   version "1.0.1"
   dependencies:
-    couchbase-lite-query-parser "^1.0.0"
+    couchbase-lite-query-parser "^1.0.2"
     fast-deep-equal "^2.0.1"
     hoist-non-react-statics "^2.5.0"
 
