@@ -6,7 +6,7 @@ import { cblProvider } from 'react-native-cbl'
 
 @cblProvider( props => ({
   notes: {
-    view: 'main/notes',
+    query: 'SELECT *, _id ORDER BY title DESC',
   },
 }))
 export default class HomeScreen extends React.Component {
@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
           <List>
             {
               this.props.notes.map( note =>
-                <ListItem key={note.id} onPress={() => this.onListItemClick(note.id)}>
+                <ListItem key={note._id} onPress={() => this.onListItemClick(note._id)}>
                   <View>
                     <Text>{note.title}</Text>
                     <Text>{note.text}</Text>
