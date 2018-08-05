@@ -1,47 +1,44 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Container, Header, Title, Content, Button, Left, Right, Body, Text,
-  List, ListItem } from 'native-base'
-import { cblProvider } from 'react-native-cbl'
+import { Button, Text } from 'native-base'
+import NoteList from './note-list'
 
-@cblProvider( props => ({
-  notes: {
-    query: 'SELECT *, _id ORDER BY title DESC',
-  },
-}))
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Notes',
     headerRight: (
-      <Button
-        transparent
-        onPress={() => navigation.navigate('NoteModal')}
-      ><Text>Add</Text></Button>
+      <View style={{flexDirection: 'row'}}>
+        <Button
+          transparent
+          onPress={navigation.getParam('onSortPress')}
+          ><Text>Sort</Text></Button>
+        <Button
+          transparent
+          onPress={() => navigation.navigate('NoteModal')}
+        ><Text>Add</Text></Button>
+      </View>
     ),
   })
 
-  onListItemClick = noteId => {
+  state = {
+    sortDirection: 1,
+  }
+
+  onNotePress = noteId => {
     this.props.navigation.navigate('Note', { noteId })
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ onSortPress: this.onSortPress });
+  }
+
+  onSortPress = () => {
+    this.setState( ({sortDirection}) => ({sortDirection: sortDirection * -1}) )
   }
 
   render() {
     return (
-      <Container>
-        <Content>
-          <List>
-            {
-              this.props.notes.map( note =>
-                <ListItem key={note._id} onPress={() => this.onListItemClick(note._id)}>
-                  <View>
-                    <Text>{note.title}</Text>
-                    <Text>{note.text}</Text>
-                  </View>
-                </ListItem>
-              )
-            }
-          </List>
-        </Content>
-      </Container>
+      <NoteList sortDirection={this.state.sortDirection} onNotePress={this.onNotePress} />
     )
   }
 }
